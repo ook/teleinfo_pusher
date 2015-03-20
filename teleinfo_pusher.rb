@@ -4,7 +4,7 @@ require 'teleinfo'
 require 'aerospike'
 
 class AerospikeConnector
-  def initialize(namespace: nil, host: '127.0.0.1', port: 3333)
+  def initialize(namespace: ENV['AS_NAMESPACE'], host: '127.0.0.1', port: 3333)
     @namespace = namespace
     @client = Aerospike::Client.new(host, port)
   end
@@ -16,7 +16,7 @@ class AerospikeConnector
 end
 
 teleinfo = Teleinfo::Parser.new(ARGF)
-as = AerospikeConnector.new(namespace: 'sweethome')
+as = AerospikeConnector.new
 puts "entering the loop"
 loop do
   frame = teleinfo.next
