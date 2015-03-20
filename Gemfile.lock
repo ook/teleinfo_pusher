@@ -1,10 +1,16 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    aerospike (1.0.1)
+      bcrypt (~> 3.1)
+      msgpack (~> 0.5)
+    bcrypt (3.1.10)
+    msgpack (0.5.11)
     teleinfo (0.0.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aerospike
   teleinfo
