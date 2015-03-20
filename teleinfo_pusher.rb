@@ -24,8 +24,12 @@ loop do
   frame.to_hash.each { |k,v| hash_frame[k.to_s] = v }
   puts hash_frame.inspect
   puts
-  as.put_hash('teleinfo', Time.now.utc.to_i, hash_frame)
-  puts "going to sleep…"
-  sleep(15)
+  if hash_frame['iinst']
+    as.put_hash('teleinfo', Time.now.utc.to_i, hash_frame)
+    puts "going to sleep…"
+    sleep(15)
+  else
+    puts "Incomplete frame, fast skip"
+  end
 end
 
