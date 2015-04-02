@@ -22,10 +22,11 @@ loop do
   frame = teleinfo.next
   hash_frame = {}
   frame.to_hash.each { |k,v| hash_frame[k.to_s] = v }
+  hash_frame[:timestamp] = Time.now.utc.to_i
   puts hash_frame.inspect
   puts
   if hash_frame['iinst']
-    as.put_hash('teleinfo', Time.now.utc.to_i, hash_frame)
+    as.put_hash('teleinfo', 'teleinfo', hash_frame)
     puts "going to sleep…"
     sleep(15)
   else
