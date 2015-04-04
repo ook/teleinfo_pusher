@@ -7,11 +7,11 @@ class AerospikeConnector
   def initialize(namespace: ENV['AS_NAMESPACE'], host: '127.0.0.1', port: 3333)
     @namespace = namespace
     @client = Aerospike::Client.new(host, port)
-    @key = Aerospike::Key.new(@namespace, 'teleinfo', 'raw')
   end
 
   def add_hash(hash)
-    record = @client.get(@key)
+    @key = Aerospike::Key.new(@namespace, 'teleinfo', Time.now.strftime('%Y%m%d'))
+    record = @client.get(@key) || {}
     record[Time.now.utc.to_i] = hash
     @client.put(@key, record)
   end
