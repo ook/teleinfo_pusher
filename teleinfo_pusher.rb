@@ -11,8 +11,8 @@ class AerospikeConnector
 
   def add_hash(hash)
     @key = Aerospike::Key.new(@namespace, 'teleinfo', Time.now.strftime('%Y%m%d'))
-    record = @client.get(@key) || {}
-    record[Time.now.utc.to_i] = hash
+    record = @client.get(@key).bins || {}
+    record[Time.now.utc.to_i.to_s] = hash
     @client.put(@key, record)
   end
 end
