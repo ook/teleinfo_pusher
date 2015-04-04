@@ -27,7 +27,7 @@ loop do
   puts hash_frame.inspect
   puts
   if hash_frame['iinst']
-    as.add_hash('teleinfo', 'teleinfo', hash_frame)
+    as.add_hash(hash_frame)
     puts "going to sleep…"
     sleep(15)
   else
