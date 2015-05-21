@@ -1,34 +1,21 @@
 #!/usr/bin/env ruby
 
 require 'teleinfo'
-require 'aerospike'
-
-class AerospikeConnector
-  def initialize(namespace: ENV['AS_NAMESPACE'], host: '127.0.0.1', port: 3333)
-    @namespace = namespace
-    @client = Aerospike::Client.new(host, port)
-  end
-
-  def add_hash(hash)
-    @key = Aerospike::Key.new(@namespace, 'teleinfo', Time.now.strftime('%Y%m%d'))
-    record = @client.get(@key)
-    record = record && record.bins || {}
-    record[Time.now.utc.to_i.to_s] = hash
-    @client.put(@key, record)
-  end
-end
+require 'http'
 
 teleinfo = Teleinfo::Parser.new(ARGF)
-as = AerospikeConnector.new
+teleinfo_pusher_url = ENV['TI_URL']
+raise "Missing ENV['TI_URL']. Please specify a complete URL" unless teleinfo_pusher_url 
 puts "entering the loop"
 loop do
   frame = teleinfo.next
   hash_frame = {}
   frame.to_hash.each { |k,v| hash_frame[k.to_s] = v }
+  puts Time.now
   puts hash_frame.inspect
   puts
   if hash_frame['iinst']
-    as.add_hash(hash_frame)
+    http.post(teleinfo_pusher_url, json: hash_frame)
     puts "going to sleep…"
     sleep(15)
   else
