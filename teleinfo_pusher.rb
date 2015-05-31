@@ -14,7 +14,7 @@ loop do
   puts hash_frame.to_json
   puts
   if hash_frame['iinst']
-    resp = http.post(teleinfo_pusher_url, json: hash_frame)
+    resp = HTTP.post(teleinfo_pusher_url, json: hash_frame)
     puts resp.inspect
     puts resp.body.read
     puts "going to sleep…"
