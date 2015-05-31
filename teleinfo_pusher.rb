@@ -2,6 +2,7 @@
 
 require 'teleinfo'
 require 'http'
+require 'time'
 
 teleinfo = Teleinfo::Parser.new(ARGF)
 teleinfo_pusher_url = ENV['TI_URL']
