@@ -11,6 +11,7 @@ loop do
   frame = teleinfo.next
   hash_frame = {}
   frame.to_hash.each { |k,v| hash_frame[k.to_s] = v }
+  hash_frame['time'] = Time.now.utc.iso8601
   puts hash_frame.to_json
   puts
   if hash_frame['iinst']
