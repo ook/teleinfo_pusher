@@ -11,13 +11,14 @@ loop do
   frame = teleinfo.next
   hash_frame = {}
   frame.to_hash.each { |k,v| hash_frame[k.to_s] = v }
-  puts Time.now
-  puts hash_frame.inspect
+  puts hash_frame.to_json
   puts
   if hash_frame['iinst']
-    http.post(teleinfo_pusher_url, json: hash_frame)
+    resp = HTTP.post(teleinfo_pusher_url, json: hash_frame)
+    puts resp.inspect
+    puts resp.body.read
     puts "going to sleep…"
-    sleep(15)
+    sleep(5)
   else
     puts "Incomplete frame, fast skip"
   end
