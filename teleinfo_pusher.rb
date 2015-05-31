@@ -16,7 +16,7 @@ loop do
   if hash_frame['iinst']
     resp = HTTP.post(teleinfo_pusher_url, json: hash_frame)
     puts resp.inspect
-    puts resp.body.read
+    puts resp.to_s
     puts "going to sleep…"
     sleep(5)
   else
