@@ -16,11 +16,16 @@ loop do
   puts hash_frame.to_json
   puts
   if hash_frame['iinst']
-    resp = HTTP.post(teleinfo_pusher_url, json: hash_frame)
-    puts resp.inspect
-    puts resp.to_s
-    puts "going to sleep…"
-    sleep(5)
+    begin
+      resp = HTTP.post(teleinfo_pusher_url, json: hash_frame)
+      puts resp.inspect
+      puts resp.to_s
+      puts "going to sleep…"
+      sleep(5)
+    rescue Exception => e
+      puts "Exception caught!"
+      puts e.inspect
+    end
   else
     puts "Incomplete frame, fast skip"
   end
