@@ -19,7 +19,8 @@ loop do
   else
     hash_frame['name'] = 'teleinfo'
     hash_frame['columns'] = frame_h.keys
-    hash_frame['points'] = frame_h.values
+    hash_frame['points'] = [frame_h.values]
+    hash_frame = [hash_frame]
   end
   puts hash_frame.to_json
   puts
