@@ -1,9 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    cause (0.1)
     http (0.6.3)
       http_parser.rb (~> 0.6.0)
     http_parser.rb (0.6.0)
+    influxdb (0.3.5)
+      cause
+      json
+    json (1.8.3)
     teleinfo (0.0.3)
 
 PLATFORMS
@@ -11,4 +16,5 @@ PLATFORMS
 
 DEPENDENCIES
   http
+  influxdb
   teleinfo
