@@ -24,7 +24,7 @@ loop do
   next unless hash_frame.key?(:iinst)
   hash_frame = {}
   begin
-    resp = HTTP.post(teleinfo_pusher_url, data: influx_data)
+    resp = HTTP.post(teleinfo_pusher_url, body: influx_data)
     puts resp.inspect
     puts resp.to_s
     puts "going to sleep…"
