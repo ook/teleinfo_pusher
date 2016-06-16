@@ -19,7 +19,7 @@ loop do
   influx_data = hash_frame.map do |(k,v)|
     next if k == :adco
     "power,adco=#{hash_frame[:adco]},place=#{place} #{k}=#{v}"
-  end
+  end.join("\n")
   puts influx_data
   next unless hash_frame.key?(:iinst)
   hash_frame = {}
