@@ -11,6 +11,9 @@ place = ENV['PLACE']
 raise "Missing ENV['TI_URL']. Please specify a complete URL" unless teleinfo_pusher_url 
 raise "Missing ENV['PLACE']. Please specify a name" unless place
 puts "entering the loop"
+
+
+http = HTTP.persistent(teleinfo_pusher_url)
 loop do
   frame = teleinfo.next
   next unless frame
@@ -19,12 +22,12 @@ loop do
   influx_data = hash_frame.map do |(k,v)|
     next if k == :adco
     "power,adco=#{hash_frame[:adco]},place=#{place} #{k}=#{v}"
-  end.join("\n")
+  end
   puts influx_data
   next unless hash_frame.key?(:iinst)
   hash_frame = {}
   begin
-    resp = HTTP.post(teleinfo_pusher_url, body: influx_data)
+    resp = http.post(teleinfo_pusher_url, body: influx_data)
     puts resp.inspect
     puts resp.to_s
     puts "going to sleep…"
@@ -34,4 +37,6 @@ loop do
     puts e.inspect
   end
 end
+
+http.close
 
