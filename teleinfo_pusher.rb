@@ -27,11 +27,13 @@ loop do
   next unless hash_frame.key?(:iinst)
   hash_frame = {}
   begin
-    resp = http.post(teleinfo_pusher_url, body: influx_data)
-    puts resp.inspect
-    puts resp.to_s
+    influx_data.each do |data| 
+      resp = http.post(teleinfo_pusher_url, body: data) 
+      puts resp.to_s
+      puts resp.flush
+    end
     puts "going to sleep…"
-    sleep(5)
+    sleep(3)
   rescue Exception => e
     puts "Exception caught!"
     puts e.inspect
